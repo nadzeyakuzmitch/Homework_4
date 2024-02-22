@@ -14,8 +14,10 @@ as well as the functionality of the Calculation class that encapsulates these op
 # Import the arithmetic operation functions (add, subtract, multiply, divide) to be tested.
 # pylint: disable=unnecessary-dunder-call, invalid-name
 from decimal import Decimal
+
+import pytest
 from calculator.calculation import Calculation
-from calculator.operations import add
+from calculator.operations import add, divide
 
 # pytest.mark.parametrize decorator is used to parameterize a test function, enabling it to be called
 # with different sets of arguments. Here, it's used to test various scenarios of arithmetic operations
@@ -48,3 +50,14 @@ def test_calculation_repr():
     calc = Calculation(Decimal('10'), Decimal('5'), add)  # Create a Calculation instance for testing.
     expected_repr = "Calculation(10, 5, add)"  # Define the expected string representation.
     assert calc.__repr__() == expected_repr, "The __repr__ method output does not match the expected string."  # Assert that the actual string representation matches the expected string.
+
+def test_divide_by_zero():
+    """
+    Test division by zero to ensure it raises a ValueError.
+    
+    This test checks that attempting to perform a division operation with a zero divisor
+    correctly raises a ValueError, as dividing by zero is mathematically undefined and should be handled as an error.
+    """
+    calc = Calculation(Decimal('10'), Decimal('0'), divide)  # Create a Calculation instance with a zero divisor.
+    with pytest.raises(ValueError, match="Cannot divide by zero"):  # Expect a ValueError to be raised.
+        calc.perform()  # Attempt to perform the calculation, which should trigger the ValueError.
