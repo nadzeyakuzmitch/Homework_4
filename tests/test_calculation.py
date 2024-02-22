@@ -14,9 +14,8 @@ as well as the functionality of the Calculation class that encapsulates these op
 # Import the arithmetic operation functions (add, subtract, multiply, divide) to be tested.
 # pylint: disable=unnecessary-dunder-call, invalid-name
 from decimal import Decimal
-import pytest
 from calculator.calculation import Calculation
-from calculator.operations import add, divide
+from calculator.operations import add
 
 # pytest.mark.parametrize decorator is used to parameterize a test function, enabling it to be called
 # with different sets of arguments. Here, it's used to test various scenarios of arithmetic operations
@@ -49,4 +48,3 @@ def test_calculation_repr():
     calc = Calculation(Decimal('10'), Decimal('5'), add)  # Create a Calculation instance for testing.
     expected_repr = "Calculation(10, 5, add)"  # Define the expected string representation.
     assert calc.__repr__() == expected_repr, "The __repr__ method output does not match the expected string."  # Assert that the actual string representation matches the expected string.
-
