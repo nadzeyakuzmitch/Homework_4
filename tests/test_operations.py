@@ -1,12 +1,13 @@
-import pytest
+"""Operations testing file"""
 from decimal import Decimal
+import pytest
 from calculator.calculation import Calculation
-from calculator.operations import add, subtract, multiply, divide
+from calculator.operations import divide
 
 
-def test_operation(a, b, operation, expected):
+def test_operation(argumenta, argumentb, operation, expected):
     '''Testing various operations'''
-    calculation = Calculation.create(a, b, operation)
+    calculation = Calculation.create(argumenta, argumentb, operation)
     assert calculation.perform() == expected, f"{operation.__name__} operation failed"
 
 # Keeping the divide by zero test as is since it tests a specific case

@@ -1,5 +1,4 @@
-# conftest.py
-import pytest
+"""Module that configures testing"""
 from decimal import Decimal
 from faker import Faker
 from calculator.operations import add, subtract, multiply, divide
@@ -7,6 +6,8 @@ from calculator.operations import add, subtract, multiply, divide
 fake = Faker()
 
 def generate_test_data(num_records):
+    """Function generates data for tests"""
+
     # Define operation mappings for both Calculator and Calculation tests
     operation_mappings = {
         'add': add,
@@ -20,25 +21,27 @@ def generate_test_data(num_records):
         b = Decimal(fake.random_number(digits=2)) if _ % 4 != 3 else Decimal(fake.random_number(digits=1))
         operation_name = fake.random_element(elements=list(operation_mappings.keys()))
         operation_func = operation_mappings[operation_name]
-        
+
         # Ensure b is not zero for divide operation to prevent division by zero in expected calculation
-        if operation_func == divide:
+        if operation_func == 'divide':
             b = Decimal('1') if b == Decimal('0') else b
-        
+
         try:
-            if operation_func == divide and b == Decimal('0'):
+            if operation_func == 'divide' and b == Decimal('0'):
                 expected = "ZeroDivisionError"
             else:
                 expected = operation_func(a, b)
         except ZeroDivisionError:
             expected = "ZeroDivisionError"
-        
+
         yield a, b, operation_name, operation_func, expected
 
 def pytest_addoption(parser):
+    """Function adopting new CMD command"""
     parser.addoption("--num_records", action="store", default=5, type=int, help="Number of test records to generate")
 
 def pytest_generate_tests(metafunc):
+    """Function generates test variants"""
     # Check if the test is expecting any of the dynamically generated fixtures
     if {"a", "b", "expected"}.intersection(set(metafunc.fixturenames)):
         num_records = metafunc.config.getoption("num_records")
