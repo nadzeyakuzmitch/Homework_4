@@ -5,9 +5,9 @@ from calculator.calculation import Calculation
 from calculator.operations import divide
 
 
-def test_operation(a, b, operation, expected):
+def test_operation(arga, argb, operation, expected):
     '''Testing various operations'''
-    calculation = Calculation.create(a, b, operation)
+    calculation = Calculation.create(arga, argb, operation)
     assert calculation.perform() == expected, f"{operation.__name__} operation failed"
 
 # Keeping the divide by zero test as is since it tests a specific case
