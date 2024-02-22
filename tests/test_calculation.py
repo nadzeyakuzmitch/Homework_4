@@ -21,7 +21,7 @@ from calculator.operations import add
 # with different sets of arguments. Here, it's used to test various scenarios of arithmetic operations
 # with both integer and decimal operands to ensure the operations work correctly under different conditions.
 
-def test_calculation_operations(a, b, operation, expected):
+def test_calculation_operations(arga, argb, operation, expected):
     """
     Test calculation operations with various scenarios.
     
@@ -35,8 +35,8 @@ def test_calculation_operations(a, b, operation, expected):
         operation (function): The arithmetic operation to perform.
         expected (Decimal): The expected result of the operation.
     """
-    calc = Calculation(a, b, operation)  # Create a Calculation instance with the provided operands and operation.
-    assert calc.perform() == expected, f"Failed {operation.__name__} operation with {a} and {b}"  # Perform the operation and assert that the result matches the expected value.
+    calc = Calculation(arga, argb, operation)  # Create a Calculation instance with the provided operands and operation.
+    assert calc.perform() == expected, f"Failed {operation.__name__} operation with {arga} and {argb}"  # Perform the operation and assert that the result matches the expected value.
 
 def test_calculation_repr():
     """
